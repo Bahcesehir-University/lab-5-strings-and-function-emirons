@@ -1,0 +1,100 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Constructors & Getter (9 pts)
+      id: constructors-getter-9-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Constructors & Getter (9 pts)
+        setup-command: ''
+        command: make test_group1
+        timeout: 10
+        max-score: 9
+    - name: Basic String Operations (12 pts)
+      id: basic-string-operations-12-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Basic String Operations (12 pts)
+        setup-command: ''
+        command: make test_group2
+        timeout: 10
+        max-score: 12
+    - name: String Manipulation (16 pts)
+      id: string-manipulation-16-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: String Manipulation (16 pts)
+        setup-command: ''
+        command: make test_group3
+        timeout: 10
+        max-score: 16
+    - name: Search Operations (8 pts)
+      id: search-operations-8-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Search Operations (8 pts)
+        setup-command: ''
+        command: make test_group4
+        timeout: 10
+        max-score: 8
+    - name: Function Overloading — append (12 pts)
+      id: function-overloading-append-12-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Function Overloading — append (12 pts)
+        setup-command: ''
+        command: make test_group5
+        timeout: 10
+        max-score: 12
+    - name: Function Overloading — replace (10 pts)
+      id: function-overloading-replace-10-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Function Overloading — replace (10 pts)
+        setup-command: ''
+        command: make test_group6
+        timeout: 10
+        max-score: 10
+    - name: Operator Overloading (25 pts)
+      id: operator-overloading-25-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Operator Overloading (25 pts)
+        setup-command: ''
+        command: make test_group7
+        timeout: 10
+        max-score: 25
+    - name: Stream Operators (8 pts)
+      id: stream-operators-8-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Stream Operators (8 pts)
+        setup-command: ''
+        command: make test_group8
+        timeout: 10
+        max-score: 8
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CONSTRUCTORS-GETTER-9-PTS_RESULTS: "${{steps.constructors-getter-9-pts.outputs.result}}"
+        BASIC-STRING-OPERATIONS-12-PTS_RESULTS: "${{steps.basic-string-operations-12-pts.outputs.result}}"
+        STRING-MANIPULATION-16-PTS_RESULTS: "${{steps.string-manipulation-16-pts.outputs.result}}"
+        SEARCH-OPERATIONS-8-PTS_RESULTS: "${{steps.search-operations-8-pts.outputs.result}}"
+        FUNCTION-OVERLOADING-APPEND-12-PTS_RESULTS: "${{steps.function-overloading-append-12-pts.outputs.result}}"
+        FUNCTION-OVERLOADING-REPLACE-10-PTS_RESULTS: "${{steps.function-overloading-replace-10-pts.outputs.result}}"
+        OPERATOR-OVERLOADING-25-PTS_RESULTS: "${{steps.operator-overloading-25-pts.outputs.result}}"
+        STREAM-OPERATORS-8-PTS_RESULTS: "${{steps.stream-operators-8-pts.outputs.result}}"
+      with:
+        runners: constructors-getter-9-pts,basic-string-operations-12-pts,string-manipulation-16-pts,search-operations-8-pts,function-overloading-append-12-pts,function-overloading-replace-10-pts,operator-overloading-25-pts,stream-operators-8-pts
